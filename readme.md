@@ -16,12 +16,12 @@ $ npm install --save-dev gulp-imagemin
 To install some binaries, prerequisites are required. Here are a few of the prerequisites for the plugins:
 
 #### Macos
-To install imagemin-gifsicle
+To install most plugins
 ```
-$ brew install autoconf automake libtool
+$ brew install autoconf automake libtool nasm zlib
 ```
 #### Linux
-To install imagemin-mozjpeg
+To install most plugins
 ```
 $ sudo apt-get install autoconf automake libtool nasm zlib1g-dev
 ```
