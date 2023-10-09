@@ -21,6 +21,11 @@ To install imagemin-gifsicle
 $ brew install autoconf automake libtool
 ```
 #### Linux
+To install imagemin-mozjpeg
+```
+$ sudo apt-get -y install autoconf automake libtool
+```
+
 To install imagemin-pngquant
 ```
 $ sudo apt-get -y install libpng-dev libimagequant-dev
