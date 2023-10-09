@@ -31,6 +31,15 @@ To install imagemin-pngquant
 $ sudo apt-get install libpng-dev libimagequant-dev
 ```
 
+### Security
+To cover security issues exposed in older component dependencies still in the original `imagemin` ecosystem, the following overrides may be required at the top level project's `package.json`:
+```
+  "overrides": {
+    "download": "npm:@xhmikosr/downloader",
+    "bin-wrapper": "npm:@xhmikosr/bin-wrapper",
+    "bin-build": "npm:@localnerve/bin-build"
+  }
+```
 ## Usage
 
 ### Basic
