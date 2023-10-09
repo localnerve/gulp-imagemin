@@ -2,12 +2,33 @@
 
 > Minify PNG, JPEG, GIF and SVG images with [`imagemin`](https://github.com/imagemin/imagemin)
 
+> **This is a updated, maintained fork of [`gulp-imagemin`](https://github.com/sindresorhus/gulp-imagemin)**
+
 *Issues with the output should be reported on the [`imagemin` issue tracker](https://github.com/imagemin/imagemin/issues).*
 
 ## Install
 
 ```
 $ npm install --save-dev gulp-imagemin
+```
+
+### Prerequisites
+To install some binaries, prerequisites are required. Here are a few of the prerequisites for the plugins:
+
+#### Macos
+To install most plugins
+```
+$ brew install autoconf automake libtool nasm zlib
+```
+#### Linux
+To install most plugins
+```
+$ sudo apt-get install autoconf automake libtool nasm zlib1g-dev
+```
+
+To install imagemin-pngquant
+```
+$ sudo apt-get install libpng-dev libimagequant-dev
 ```
 
 ## Usage
