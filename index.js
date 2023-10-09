@@ -1,4 +1,3 @@
-import {createRequire} from 'node:module';
 import path from 'node:path';
 import process from 'node:process';
 import log from 'fancy-log';
@@ -9,22 +8,36 @@ import chalk from 'chalk';
 import imagemin from 'imagemin';
 import plur from 'plur';
 
-const require = createRequire(import.meta.url);
-
 const PLUGIN_NAME = 'gulp-imagemin';
 const defaultPlugins = ['gifsicle', 'mozjpeg', 'optipng', 'svgo'];
 
-const loadPlugin = (plugin, ...args) => {
+async function loadPlugin(plugin, ...args) {
+	let result;
+
 	try {
-		return require(`imagemin-${plugin}`)(...args);
-	} catch {
-		log(`${PLUGIN_NAME}: Could not load default plugin \`${plugin}\``);
+		const imported = await import(`#${plugin}`);
+		const factory = imported.default;
+		result = factory(...args);
+	} catch (error) {
+		const message = `${PLUGIN_NAME}: Could not load default plugin \`${plugin}\`...\n  * ${error}`;
+		log(message);
+		result = Promise.reject(message);
 	}
-};
 
-const exposePlugin = plugin => (...args) => loadPlugin(plugin, ...args);
+	return result;
+}
 
-const getDefaultPlugins = () => defaultPlugins.flatMap(plugin => loadPlugin(plugin));
+function exposePlugin(plugin) {
+	return async (...args) => {
+		const loadedPlugin = await loadPlugin(plugin, ...args);
+		return loadedPlugin;
+	};
+}
+
+async function getAvailableDefaultPlugins() {
+	const settledDefaultPlugins = await Promise.allSettled(defaultPlugins.map(plugin => loadPlugin(plugin)));
+	return settledDefaultPlugins.filter(outcome => outcome.status === 'fulfilled').map(outcome => outcome.value);
+}
 
 export default function gulpImagemin(plugins, options) {
 	if (typeof plugins === 'object' && !Array.isArray(plugins)) {
@@ -40,6 +53,9 @@ export default function gulpImagemin(plugins, options) {
 	};
 
 	const validExtensions = new Set(['.jpg', '.jpeg', '.png', '.gif', '.svg']);
+
+	const promisedPlugins = plugins && Promise.all(plugins);
+	const pendingPlugins = promisedPlugins || getAvailableDefaultPlugins();
 
 	let totalBytes = 0;
 	let totalSavedBytes = 0;
@@ -67,12 +83,11 @@ export default function gulpImagemin(plugins, options) {
 			return;
 		}
 
-		const localPlugins = plugins || getDefaultPlugins();
-
 		(async () => {
 			try {
+				const resolvedPlugins = await pendingPlugins;
 				const data = await imagemin.buffer(file.contents, {
-					plugins: localPlugins,
+					plugins: resolvedPlugins,
 				});
 				const originalSize = file.contents.length;
 				const optimizedSize = data.length;
