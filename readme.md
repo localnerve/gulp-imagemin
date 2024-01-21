@@ -13,14 +13,19 @@ $ npm install --save-dev gulp-imagemin
 ```
 
 ### Prerequisites
+
+1. [Binaries](#binary-prerequisites)
+2. [Overrides](#override-prerequisites)
+
+#### Binary Prerequisites
 To install some binaries, prerequisites are required. Here are a few of the prerequisites for the plugins:
 
-#### Macos
+##### Macos
 To install most plugins
 ```
 $ brew install cmake autoconf automake libtool nasm zlib libimagequant
 ```
-#### Linux
+##### Linux
 To install most plugins
 ```
 $ sudo apt-get install autoconf automake libtool nasm zlib1g-dev
@@ -31,8 +36,9 @@ To install imagemin-pngquant
 $ sudo apt-get install libpng-dev libimagequant-dev
 ```
 
-### Security
-To cover security issues exposed in older component dependencies still in the original `imagemin` ecosystem, the following overrides may be required at the top level project's `package.json`:
+#### Override Prerequisites
+
+To cover security and functional issues exposed in older component dependencies still in the original `imagemin` ecosystem, the following overrides are required at the top level project's `package.json`:
 ```
   "overrides": {
     "download": "npm:@xhmikosr/downloader",
@@ -40,6 +46,7 @@ To cover security issues exposed in older component dependencies still in the or
     "bin-build": "npm:@localnerve/bin-build"
   }
 ```
+
 ## Usage
 
 ### Basic
