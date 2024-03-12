@@ -4,7 +4,6 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import imageminPngquant from '@localnerve/imagemin-pngquant';
 import Vinyl from 'vinyl';
-import getStream from 'get-stream';
 import test from 'ava';
 import gulpImagemin, {mozjpeg, svgo} from './index.js';
 
@@ -22,11 +21,23 @@ const createFixture = async (pluginsOrOptions, file = 'fixture.png', options = n
 	return {buffer, stream};
 };
 
+async function getStreamBuffer (stream) {
+	return new Promise((resolve, reject) => {
+		const chunks = [];
+		stream.on('data', chunk => {
+			chunks.push(chunk);
+		});
+		stream.on('end', () => {
+			resolve(chunks[0].contents);
+		});
+		stream.on('error', reject);
+	});
+}
+
 test('minify images', async t => {
 	const {buffer, stream} = await createFixture();
-	const file = await getStream.array(stream);
-
-	t.true(file[0].contents.length < buffer.length);
+	const file = await getStreamBuffer(stream);
+	t.true(file.length < buffer.length);
 });
 
 test('minify JPEG with custom settings', async t => {
@@ -36,19 +47,19 @@ test('minify JPEG with custom settings', async t => {
 		smooth: 45,
 	};
 	const {buffer, stream} = await createFixture([mozjpeg(mozjpegOptions)], 'fixture.jpg', {verbose: true});
-	const file = await getStream.array(stream);
+	const file = await getStreamBuffer(stream);
 
-	t.true(file[0].contents.length < buffer.length);
+	t.true(file.length < buffer.length);
 });
 
 test('use custom plugins', async t => {
 	const {stream} = await createFixture([imageminPngquant()]);
 	const fixture = await createFixture();
 	const compareStream = fixture.stream;
-	const file = await getStream.array(stream);
-	const compareFile = await getStream.array(compareStream);
+	const file = await getStreamBuffer(stream);
+	const compareFile = await getStreamBuffer(compareStream);
 
-	t.true(file[0].contents.length < compareFile[0].contents.length);
+	t.true(file.length < compareFile.length);
 });
 
 test('use custom svgo settings', async t => {
@@ -61,17 +72,17 @@ test('use custom svgo settings', async t => {
 	const {stream} = await createFixture([svgo(svgoOptions)], 'fixture-svg-logo.svg');
 	const fixture = await createFixture({verbose: true}, 'fixture-svg-logo.svg');
 	const compareStream = fixture.stream;
-	const file = await getStream.array(stream);
-	const compareFile = await getStream.array(compareStream);
+	const file = await getStreamBuffer(stream);
+	const compareFile = await getStreamBuffer(compareStream);
 
-	t.true(file[0].contents.length > compareFile[0].contents.length);
+	t.true(file.length > compareFile.length);
 });
 
 test('skip unsupported images', async t => {
 	const fixtureName = 'fixture.bmp';
 	const {stream} = await createFixture({verbose: true}, fixtureName);
 	const compareFile = await fs.readFile(path.join(__dirname, fixtureName));
-	const file = await getStream.array(stream);
+	const file = await getStreamBuffer(stream);
 
-	t.deepEqual(file[0].contents, compareFile);
+	t.deepEqual(file, compareFile);
 });
