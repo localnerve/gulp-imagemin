@@ -106,7 +106,8 @@ export default function gulpImagemin(plugins, options) {
 					log(`${PLUGIN_NAME}:`, chalk.green('✔ ') + file.relative + chalk.gray(` (${message})`));
 				}
 
-				file.contents = data;
+				file.contents = Buffer.from(data);
+
 				callback(null, file);
 			} catch (error) {
 				callback(new PluginError(PLUGIN_NAME, error, {fileName: file.path}));
