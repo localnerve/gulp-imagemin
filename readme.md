@@ -23,7 +23,7 @@ To install some binaries, prerequisites are required. Here are a few of the prer
 ##### Macos
 To install most plugins
 ```
-$ brew install cmake autoconf automake libtool nasm zlib libimagequant
+$ brew install cmake autoconf automake libtool nasm zlib libimagequant libpng
 ```
 ##### Linux
 To install most plugins
