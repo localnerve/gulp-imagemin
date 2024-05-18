@@ -42,7 +42,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install Prerequisites
-      run: brew install cmake autoconf automake libtool nasm zlib libpng-dev libimagequant
+      run: brew install cmake autoconf automake libtool nasm zlib libpng libimagequant pkg-config
     - run: npm install --loglevel verbose
     - run: npm test
       env:
