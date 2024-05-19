@@ -43,10 +43,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install Prerequisites
       run: |
-        brew install cmake autoconf automake libtool pkg-config nasm zlib libpng libimagequant jpeg jpeg-turbo jpeg-xl
-        export PKG_CONFIG_PATH="/opt/homebrew/opt/zlib/lib/pkgconfig"
-        brew list
-
+        brew install cmake autoconf automake libtool nasm zlib libimagequant
+        brew list --versions
     - run: npm install --loglevel verbose
     - run: npm test
       env:
