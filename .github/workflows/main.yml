@@ -44,17 +44,20 @@ jobs:
 
     - name: Install Prerequisites
       run: |
-        brew install cmake autoconf automake libtool nasm zlib libimagequant
+        brew install cmake autoconf automake libtool nasm zlib libimagequant jpeg
         brew list --versions
         echo "LDFLAGS=\"-L`brew --prefix zlib`/lib\"" >> $GITHUB_ENV
         echo "CPPFLAGS=\"-I`brew --prefix zlib`/include\"" >> $GITHUB_ENV
-        echo "PKG_CONFIG_PATH=\"`brew --prefix zlib`/lib/pkgconfig\"" >> $GITHUB_ENV
+        echo "ASM_NASM=\"`brew --prefix nasm`/bin/nasm\"" >> $GITHUB_ENV
 
     - name: Install Packages
       run: |
         echo "LDFLAGS=$LDFLAGS"
         echo "CPPFLAGS=$CPPFLAGS"
         echo "PKG_CONFIG_PATH=$PKG_CONFIG_PATH"
+        echo "ASM_NASM=$ASM_NASM"
+        echo "PATH=$PATH"
+        echo "***"
         npm install --loglevel verbose
 
     - run: npm test
