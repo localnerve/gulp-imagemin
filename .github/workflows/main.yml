@@ -50,9 +50,6 @@ jobs:
 
     - name: Install Packages
       run: |
-        echo "LDFLAGS=$LDFLAGS"
-        echo "CPPFLAGS=$CPPFLAGS"
-        echo "PKG_CONFIG_PATH=$PKG_CONFIG_PATH"
         echo "CMAKE_ASM_NASM_COMPILER=$CMAKE_ASM_NASM_COMPILER"
         echo "PATH=$PATH"
         echo "***"
