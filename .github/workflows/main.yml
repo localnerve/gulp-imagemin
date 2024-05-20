@@ -46,8 +46,7 @@ jobs:
       run: |
         brew install cmake autoconf automake libtool nasm zlib libimagequant jpeg
         brew list --versions
-        echo "LDFLAGS=\"-L`brew --prefix zlib`/lib\"" >> $GITHUB_ENV
-        echo "CPPFLAGS=\"-I`brew --prefix zlib`/include\"" >> $GITHUB_ENV
+        echo "PATH=\"`brew --prefix libtool`/libexec/gnubin:$PATH\"" >> $GITHUB_ENV
         echo "ASM_NASM=\"`brew --prefix nasm`/bin/nasm\"" >> $GITHUB_ENV
 
     - name: Install Packages
