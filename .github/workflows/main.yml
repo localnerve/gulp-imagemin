@@ -45,6 +45,7 @@ jobs:
       run: |
         brew install cmake autoconf automake libtool nasm zlib libimagequant
         brew list --versions
+        brew --prefix zlib jpeg
     - run: npm install --loglevel verbose
     - run: npm test
       env:
