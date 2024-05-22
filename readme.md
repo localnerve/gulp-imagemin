@@ -79,7 +79,7 @@ import imagemin, {gifsicle, mozjpeg, optipng, svgo} from 'gulp-imagemin';
 				active: true
 			},
 			{
-				name: 'cleanupIDs',
+				name: 'cleanupIds',
 				active: false
 			}
 		]
