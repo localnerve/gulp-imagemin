@@ -46,8 +46,8 @@ jobs:
       run: |
         brew install cmake autoconf automake libtool nasm zlib libimagequant
         brew list --versions
-        mkdir -p /usr/local/lib
-        ln -s `brew --prefix libpng`/lib/libpng16.a /usr/local/lib/libpng16.a
+        sudo mkdir -p /usr/local/lib
+        sudo ln -s `brew --prefix libpng`/lib/libpng16.a /usr/local/lib/libpng16.a
         echo "ASM_NASM=\"`brew --prefix nasm`/bin/nasm\"" >> $GITHUB_ENV
         echo "VERBOSE=true" >> $GITHUB_ENV
 
