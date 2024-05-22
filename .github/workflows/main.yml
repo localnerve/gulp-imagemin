@@ -46,6 +46,7 @@ jobs:
       run: |
         brew install cmake autoconf automake libtool nasm zlib libimagequant
         brew list --versions
+        ln -s `brew --prefix libpng`/lib/libpng16.a /usr/local/lib/libpng16.a
         echo "ASM_NASM=\"`brew --prefix nasm`/bin/nasm\"" >> $GITHUB_ENV
         echo "VERBOSE=true" >> $GITHUB_ENV
 
@@ -53,7 +54,6 @@ jobs:
       run: |
         echo "ASM_NASM=$ASM_NASM"
         echo "VERBOSE=$VERBOSE"
-        echo "PATH=$PATH"
         echo "***"
         npm install --loglevel verbose --foreground-scripts
 
