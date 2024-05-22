@@ -11,13 +11,13 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
+        node-version: [18.x, 20.x, 22.x]
       fail-fast: false
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install Prerequisites
@@ -32,18 +32,34 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
+        node-version: [18.x, 20.x, 22.x]
       fail-fast: false
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
+
     - name: Install Prerequisites
-      run: brew install cmake autoconf automake libtool nasm zlib libimagequant
-    - run: npm install
+      run: |
+        brew install cmake autoconf automake libtool nasm zlib libimagequant
+        brew list --versions
+        sudo mkdir -p /usr/local/lib
+        sudo ln -s `brew --prefix libpng`/lib/libpng16.a /usr/local/lib/libpng16.a
+        echo "ASM_NASM=\"`brew --prefix nasm`/bin/nasm\"" >> $GITHUB_ENV
+        echo "VERBOSE=true" >> $GITHUB_ENV
+        echo "CPPFLAGS=-DPNG_ARM_NEON_OPT=0" >> $GITHUB_ENV
+
+    - name: Install Packages
+      run: |
+        echo "ASM_NASM=$ASM_NASM"
+        echo "VERBOSE=$VERBOSE"
+        echo "CPPFLAGS=$CPPFLAGS"
+        echo "***"
+        npm install --loglevel verbose --foreground-scripts
+
     - run: npm test
       env:
         CI: true
@@ -53,13 +69,13 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
+        node-version: [18.x, 20.x, 22.x]
       fail-fast: false
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
