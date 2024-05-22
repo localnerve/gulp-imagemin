@@ -50,11 +50,13 @@ jobs:
         sudo ln -s `brew --prefix libpng`/lib/libpng16.a /usr/local/lib/libpng16.a
         echo "ASM_NASM=\"`brew --prefix nasm`/bin/nasm\"" >> $GITHUB_ENV
         echo "VERBOSE=true" >> $GITHUB_ENV
+        echo "CPPFLAGS=-DPNG_ARM_NEON_OPT=0" >> $GITHUB_ENV
 
     - name: Install Packages
       run: |
         echo "ASM_NASM=$ASM_NASM"
         echo "VERBOSE=$VERBOSE"
+        echo "CPPFLAGS=$CPPFLAGS"
         echo "***"
         npm install --loglevel verbose --foreground-scripts
 
