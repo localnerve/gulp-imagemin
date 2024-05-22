@@ -55,7 +55,7 @@ jobs:
         echo "VERBOSE=$VERBOSE"
         echo "PATH=$PATH"
         echo "***"
-        npm install --loglevel verbose
+        npm install --loglevel verbose --foreground-scripts
 
     - run: npm test
       env:
