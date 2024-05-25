@@ -13,8 +13,10 @@ $ npm install --save-dev gulp-imagemin
 ```
 
 ### Prerequisites
+> Check the [workflow](.github/workflows/main.yml) file for implementation details for building on win/mac/linux
 
 1. [Binaries](#binary-prerequisites)
+2. [Silicon-arm](#silicon-arm)
 2. [Overrides](#override-prerequisites)
 
 #### Binary Prerequisites
@@ -36,8 +38,11 @@ To install imagemin-pngquant
 $ sudo apt-get install libpng-dev libimagequant-dev
 ```
 
-#### Override Prerequisites
+#### Silicon ARM
+Some plugins will not compile on Apple Silicon arm architectures by default.  
+`optipng` uses neon chipset optimizations that are incompatible with Apple Silicon. To compile on newer Macs, set the environment variable to disable neon optimizations `CPPFLAGS=-DPNG_ARM_NEON_OPT=0`
 
+#### Override Prerequisites
 To cover security and functional issues exposed in older component dependencies still in the original `imagemin` ecosystem, the following overrides are required at the top level project's `package.json`:
 ```
   "overrides": {
