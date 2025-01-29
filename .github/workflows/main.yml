@@ -44,7 +44,7 @@ jobs:
 
     - name: Install Prerequisites
       run: |
-        brew install cmake autoconf automake libtool nasm zlib libimagequant
+        brew install cmake autoconf automake libtool nasm pkg-config zlib libimagequant
         brew list --versions
         sudo mkdir -p /usr/local/lib
         sudo ln -s `brew --prefix libpng`/lib/libpng16.a /usr/local/lib/libpng16.a
