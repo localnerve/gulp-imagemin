@@ -25,12 +25,12 @@ To install some binaries, prerequisites are required. Here are a few of the prer
 ##### Macos
 To install most plugins
 ```
-$ brew install cmake autoconf automake libtool nasm zlib libimagequant
+$ brew install cmake autoconf automake pkg-config libtool nasm zlib libpng libimagequant
 ```
 ##### Linux
 To install most plugins
 ```
-$ sudo apt-get install autoconf automake libtool nasm zlib1g-dev
+$ sudo apt-get install autoconf automake libtool nasm libpng-dev zlib1g-dev
 ```
 
 To install imagemin-pngquant
@@ -40,7 +40,13 @@ $ sudo apt-get install libpng-dev libimagequant-dev
 
 #### Silicon ARM
 Some plugins will not compile on Apple Silicon arm architectures by default.  
-`optipng` uses neon chipset optimizations that are incompatible with Apple Silicon. To compile on newer Macs, set the environment variable to disable neon optimizations `CPPFLAGS=-DPNG_ARM_NEON_OPT=0`
+You will have to `npm run install-arm` manually to get this package to install properly. The npm lifecycle hooks do not currently provide any mechanism to run scripts prior to dependency build/install.  
+
+* `imagemin-optipng` uses neon chipset optimizations that are incompatible with Apple Silicon. To compile on newer Macs, set the environment variable to disable neon optimizations `CPPFLAGS=-DPNG_ARM_NEON_OPT=0`  
+
+* `imagemin-mozjpeg` uses a Makefile that assumes `/usr/local/lib/libpng16.a` exists, which is incompatible with most uses of homebrew dependency management.
+
+> `npm run install-arm` fixes both of these problems but requires you to enter sudo password twice to create the directory and symlink for the `imagemin-mozjpeg` build.
 
 #### Override Prerequisites
 To cover security and functional issues exposed in older component dependencies still in the original `imagemin` ecosystem, the following overrides are required at the top level project's `package.json`:
