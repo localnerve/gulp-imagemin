@@ -48,6 +48,12 @@ You will have to `npm run install-arm` manually to get this package to install p
 
 > `npm run install-arm` fixes both of these problems but requires you to enter sudo password twice to create the directory and symlink for the `imagemin-mozjpeg` build.
 
+The following `package.json` script steps in a parent project will automate this on install lifecycle for arm64 architectures:  
+  ```javascript
+  "install-arm": "pushd node_modules/@localnerve/gulp-imagemin && npm run install-arm && popd",  
+  "postinstall": "node -e 'process.exit(require(\"os\").arch() === \"arm64\" ? 0 : 1)' && npm run install-arm",
+  ```
+
 #### Override Prerequisites
 To cover security and functional issues exposed in older component dependencies still in the original `imagemin` ecosystem, the following overrides are required at the top level project's `package.json`:
 ```
