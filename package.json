@@ -1,6 +1,6 @@
 {
 	"name": "@localnerve/gulp-imagemin",
-	"version": "11.5.0",
+	"version": "11.5.1",
 	"description": "Minify PNG, JPEG, GIF and SVG images",
 	"license": "MIT",
 	"repository": "localnerve/gulp-imagemin",
@@ -29,7 +29,7 @@
 		"test": "xo && npm run test:cover",
 		"test:cover": "c8 --check-coverage --statements 90 ava",
 		"test:debug": "ava debug",
-		"install-arm": "sudo mkdir -p /usr/local/lib && sudo ln -s `brew --prefix libpng`/lib/libpng16.a /usr/local/lib/libpng16.a && CPPFLAGS=-DPNG_ARM_NEON_OPT=0 npm i"
+		"install-arm": "sudo mkdir -p /usr/local/lib && sudo ln -s -f `brew --prefix libpng`/lib/libpng16.a /usr/local/lib/libpng16.a && CPPFLAGS=-DPNG_ARM_NEON_OPT=0 npm i"
 	},
 	"files": [
 		"index.js"
