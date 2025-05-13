@@ -1,6 +1,6 @@
 {
 	"name": "@localnerve/gulp-imagemin",
-	"version": "11.5.4",
+	"version": "11.5.5",
 	"description": "Minify PNG, JPEG, GIF and SVG images",
 	"license": "MIT",
 	"repository": "localnerve/gulp-imagemin",
@@ -60,16 +60,16 @@
 		"through2-concurrent": "^2.0.0"
 	},
 	"devDependencies": {
-		"ava": "^6.2.0",
+		"ava": "^6.3.0",
 		"c8": "^10.1.3",
-		"@localnerve/imagemin-pngquant": "^12.3.2",
+		"@localnerve/imagemin-pngquant": "^12.3.3",
 		"vinyl": "^3.0.0",
 		"xo": "^0.60.0"
 	},
 	"optionalDependencies": {
-		"@localnerve/imagemin-gifsicle": "^10.3.1",
+		"@localnerve/imagemin-gifsicle": "^10.3.2",
 		"imagemin-mozjpeg": "^10.0.0",
-		"@localnerve/imagemin-optipng": "^11.0.2",
+		"@localnerve/imagemin-optipng": "^11.0.3",
 		"@localnerve/imagemin-svgo": "^11.2.2"
 	},
 	"overrides": {
