@@ -1,7 +1,0 @@
-{
-  "rules": {
-    "unicorn/prevent-abbreviations": "off",
-    "space-before-function-paren": "off",
-    "capitalized-comments": "off"
-  }
-}
