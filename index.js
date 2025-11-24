@@ -6,7 +6,6 @@ import through from 'through2-concurrent';
 import prettyBytes from 'pretty-bytes';
 import chalk from 'chalk';
 import imagemin from 'imagemin';
-import plur from 'plur';
 
 const PLUGIN_NAME = 'gulp-imagemin';
 const defaultPlugins = ['gifsicle', 'mozjpeg', 'optipng', 'svgo'];
@@ -116,7 +115,8 @@ export default function gulpImagemin(plugins, options) {
 	}, callback => {
 		if (!options.silent) {
 			const percent = totalBytes > 0 ? (totalSavedBytes / totalBytes) * 100 : 0;
-			let message = `Minified ${totalFiles} ${plur('image', totalFiles)}`;
+			const imgText = totalFiles === 1 ? 'image' : 'images';
+			let message = `Minified ${totalFiles} ${imgText}`;
 
 			if (totalFiles > 0) {
 				message += chalk.gray(` (saved ${prettyBytes(totalSavedBytes)} - ${percent.toFixed(1).replace(/\.0$/, '')}%)`);
